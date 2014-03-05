@@ -32,13 +32,18 @@
   (lib/resource :available-media-types ["text/html"]
                 :handle-ok "<html>Hello, Internet.</html>"))
 
+(json-response {:random 80000 :status 500})
+
 ;; ==================================================================
 ;; API Specification
 
 (defroutes app-routes
   (GET "/" [] (resp/redirect "/index.html"))
 
-  (GET "/rux" {{name :name} :params} (json-response (str "hello " name)))
+  (GET "/rux" {{name :name} :params} (string-response (str "hello " name)))
+
+
+  (GET "/rux2" {{name :name nums :nums} :params} (json-response {:greeting (str "he  llo " name) :numbers (range (read-string nums))}))
 
   (ANY "/test-api" [] test-api)
 
